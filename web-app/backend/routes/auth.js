@@ -8,7 +8,7 @@ const router = express.Router() // instanca Router klase
 
 // POST /api/auth/register
 router.post('/register', validateRegister, register)
-     // POST ruta koja sluša na /register endpoint - prima podatke iz req (poslije će pozvati controller funkciju koja će kreirati usera u bazi)
+     // POST ruta koja sluša na /register endpoint - prima podatke iz req (poziva controller funkciju koja će kreirati usera u bazi)
 
 router.post('/login', validateLogin, login)
 

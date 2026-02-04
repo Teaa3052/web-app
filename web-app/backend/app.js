@@ -13,7 +13,7 @@ app.use(express.json()) // čita JSON podatke i pretvara u JS objekte
 app.use(helmet()) // postavlja sigurnosne HTTP headere
 
 const corsOptions = {
-    origin: 'http://localhost:3000', // backend je na 3000 poslije ćemo promjenit
+    origin: 'http://localhost:5173', // backend je na 3000 poslije ćemo promjenit
 } // ograničava samo za moj front 
 
 app.use(cors(corsOptions)) // omogućava komunikaciju između fornt i backenda
@@ -22,7 +22,7 @@ app.get('/', (req, res) =>  {
     // Definira rutu: kada netko pošalje GET zahtjev na root URL ('/'), poziva se ova funkcija (tzv. callback)
     // 'req' = zahtjev koji dolazi od klijenta (npr. preglednika)
     // 'res' = odgovor koji tvoj server šalje natrag
-    res.send("Hello World")
+    res.send("")
     // Šalje tekst Hello World kao odgovor klijentu
 }) 
 

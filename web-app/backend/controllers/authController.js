@@ -2,6 +2,9 @@
 import bycrypt from "bcrypt"
 import { findByEmail, createUser } from "../models/userModel.js" 
 import { buildCheckFunction } from "express-validator"
+import jwt from 'jsonwebtoken'
+
+const secretKey = process.env.JWT_SECRET
 
 export const register = async (req, res) => {
     console.log("Register called, body:", req.body)
@@ -40,7 +43,6 @@ export const login = async (req, res) => {
         if (!match) {
             return res.status(400).json({ message: "Invalid password" })
         }
-
         res.status(200).json({
             message: "Login succesful",
             user: {
@@ -49,6 +51,19 @@ export const login = async (req, res) => {
                 nickname: user.nickname
             }
         })
+
+        const token = jwt.sign(  // stvara token -> jwt.sign(payload, secretKey, options) payload su podaci o korisniku
+            { 
+                id: user.id,
+                email: user.email,
+                nickname: user.nickname, 
+                role: user.role
+             }, 
+             secretKey,
+            {expiresIn: '1h'}) 
+
+        res.json({ token }) // vraća odg FRONTu 
+
     } catch (err) {
         res.status(500).json({ message: "Server error" })
     }
