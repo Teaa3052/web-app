@@ -2,16 +2,16 @@
 
 A full-stack web application for tracking personal goals, habits, and self-improvement journeys.
 
-## 🚀 Tech Stack
+## Tech Stack
 
-### Frontend
+**Frontend**
 - React (Vite)
 - React Router DOM
 - React Hook Form
 - Axios
 - Tailwind CSS
 
-### Backend
+**Backend**
 - Node.js
 - Express
 - PostgreSQL
@@ -19,7 +19,7 @@ A full-stack web application for tracking personal goals, habits, and self-impro
 - bcrypt
 - dotenv
 
-## 📁 Project Structure
+## Project Structure
 ```
 web-app/
 ├── frontend/
@@ -49,7 +49,7 @@ web-app/
     └── package.json
 ```
 
-## 🛠️ Setup Instructions
+## Setup Instructions
 
 ### Prerequisites
 - Node.js (v22.x or later)
@@ -118,24 +118,24 @@ npm run dev
 
 Frontend runs on `http://localhost:5173`
 
-## 🔐 Authentication Flow
+## Authentication Flow
 
 1. **Register**: User creates account → Backend hashes password with bcrypt → Stores in PostgreSQL
 2. **Login**: User submits credentials → Backend validates → Returns JWT token
 3. **Protected Routes**: Frontend sends token in Authorization header → Backend middleware verifies token
 
-## 📝 Current Features
+## Current Features
 
-- ✅ User Registration
-- ✅ User Login
-- ✅ JWT Token Authentication
-- ✅ Password Hashing (bcrypt)
-- ✅ Input Validation
-- ✅ CORS Configuration
-- ⏳ Dashboard (In Progress)
-- ⏳ Protected Routes (In Progress)
+- User Registration
+- User Login
+- JWT Token Authentication
+- Password Hashing (bcrypt)
+- Input Validation
+- CORS Configuration
+- Dashboard (In Progress)
+- Protected Routes (In Progress)
 
-## 🎯 Planned Features
+## Planned Features
 
 - User Dashboard
 - Habit Tracker
@@ -145,7 +145,7 @@ Frontend runs on `http://localhost:5173`
 - Profile Management
 - Categorized Journals/Diaries
 
-## 🔧 Development
+## Development
 
 ### Backend API Endpoints
 
@@ -182,22 +182,10 @@ Content-Type: application/json
 }
 ```
 
-## 🐛 Known Issues
-
-- None currently
-
-## 📚 Learning Resources
-
-This project is being built as a learning exercise following these principles:
-- Scalable architecture
-- Clean code practices
-- Security best practices
-- Industry-standard patterns
-
-## 👤 Author
+## Author
 
 Tea 
 
-## 📄 License
+## License
 
 This project is for educational purposes.
