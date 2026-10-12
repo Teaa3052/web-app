@@ -1,11 +1,13 @@
 {
-  "name": "web-app",
+  "name": "backend",
   "version": "1.0.0",
   "type": "module",
-  "description": "index.js",
-  "main": "index.js",
+  "description": "REST API for the self-improvement app (Express + PostgreSQL)",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch app.js",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -18,22 +20,13 @@
   },
   "homepage": "https://github.com/Teaa3052/web-app#readme",
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.18",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "express-validator": "^7.3.0",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.3",
-    "pg": "^8.16.3",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "tailwindcss": "^4.1.18"
+    "pg": "^8.16.3"
   },
-  "keywords": [],
-  "devDependencies": {
-    "@vitejs/plugin-react": "^5.1.2",
-    "vite": "^7.3.1"
-  }
+  "keywords": []
 }
