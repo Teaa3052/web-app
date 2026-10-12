@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 function Login() {
+
     const {
         register, 
         handleSubmit,
@@ -10,8 +11,8 @@ function Login() {
         formState: { errors },
     } = useForm();
 
-    const navigate = useNavigate(); 
 
+    const navigate = useNavigate(); 
 
     const onSubmit = async (data) => {
         try {
@@ -23,12 +24,12 @@ function Login() {
             localStorage.setItem('token', response.data.token);
             navigate("/dashboard");
         } catch (error) {
-            setError("root", { message: error.response?.data?.message || "Login failed" })
+            setError("root", { message: error.response?.data?.message || error.message || "Login failed" })
         }
     };
 
     return(
-        <div className="flex items-center justify-center h-96 bg-gray-100">
+        <div className="flex items-center justify-center h-96 no-bg">
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="bg-white p-6 rounded-xl shadow-md w-full max-w-sm space-y-4"
@@ -36,6 +37,11 @@ function Login() {
                 <h2 className="text-2xl font-bold text-center text-gray-700">
                     Login
                 </h2>
+                {errors.root && ( 
+                    <p className="text-red-500 text-sm text-center">
+                        {errors.root.message}
+                    </p>
+                )}
 
                 {/* Email */}
                 <div>
@@ -43,7 +49,7 @@ function Login() {
                         type="email"
                         placeholder="Email"
                         {...register("email", { required: true })}
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue.400"
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                     {errors.email && (
                         <p className="text-red-500 text-sm mt-1">
@@ -56,7 +62,13 @@ function Login() {
                     <input
                     type="password"
                     placeholder="Password"
-                    {...register("password", { required: true })}
+                    {...register("password", { 
+                        required: "Password is required",
+                        minLength: {
+                            value: 8,
+                            message: "Min 8 characters"
+                        }
+                    })}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                     {errors.password && (

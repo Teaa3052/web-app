@@ -1,5 +1,5 @@
-import { useForm } from "react-hook-form"
-import axios from 'axios'
+import { useForm } from "react-hook-form";
+import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
 
@@ -8,10 +8,12 @@ function Register() {
         register,
         handleSubmit,
         watch,
+        setError,
         formState: { errors },
     } = useForm(); 
 
-    const navigate = useNavigate;
+
+    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         try {
@@ -27,12 +29,12 @@ function Register() {
             navigate("/login");
 
         } catch (error) {
-            console.error("Registration failed", error.response?.data?.message)
+            setError("root", { message: error.response?.data?.message || "Registration failed" });
         }
     }
 
     return (
-        <div className="flex items-center justify-center h-96 bg-gray-100">
+        <div className="flex items-center justify-center h-96 no-bg">
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="bg-white p-6 rounded-xl shadow-md w-full max-w-sm space-y-4"
@@ -41,13 +43,19 @@ function Register() {
                     Register
                 </h2>
 
+                { errors.root && ( 
+                    <p className="text-red-500 text-sm text-center">
+                        {errors.root.message}
+                    </p>
+                )}
+
                 {/* Name */}
                 <div>
                     <input 
-                        type="name"
+                        type="text"
                         placeholder="Name"
                         {...register("name", { required: true })}
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue.400"
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                     {errors.name && (
                         <p className="text-red-500 text-sm mt-1">
@@ -59,10 +67,10 @@ function Register() {
                 {/* Email */}
                 <div>
                     <input 
-                        type="email"
+                        type="text"
                         placeholder="Email"
                         {...register("email", { required: true })}
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue.400"
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                     {errors.email && (
                         <p className="text-red-500 text-sm mt-1">
@@ -77,7 +85,7 @@ function Register() {
                         type="password"
                         placeholder="Password"
                         {...register("password", { required: true })}
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue.400"
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                     {errors.password && (
                         <p className="text-red-500 text-sm mt-1">
@@ -96,7 +104,7 @@ function Register() {
                             validate: (value) => 
                                 value === watch("password") || "Passwords do not match",
                         })}
-                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue.400"
+                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                     {errors.confirmPassword && (
                         <p className="text-red-500 text-sm mt-1">

@@ -1,28 +1,23 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
-import ProtectedRoutes from "./utils/ProtectedRoutes";
+import ProtectedRoutes from "@/utils/ProtectedRoutes";
+import HomePage from "@/pages/HomePage";
+import Login from "@/pages/Login";
+import Register from "@/pages/Register";
+import Dashboard from "@/pages/Dashboard";
 
-const App = () => {
-  return (
-    <Routes>
-      {/* default route */}
-      <Route path="/" element={<Navigate to="/login" replace />} />
+function App() {
+    return (
+        <Routes>
+            <Route path="/" element={<Navigate to="/homepage" replace />} />
+            <Route path="/homepage" element={<HomePage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-      {/* public */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-
-      {/* protected */}
-      <Route element={<ProtectedRoutes />}>
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Route>
-
-      {/* fallback */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
-    </Routes>
-  );
-};
+            <Route element={<ProtectedRoutes />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+            </Route>
+        </Routes>
+    );
+}
 
 export default App;
