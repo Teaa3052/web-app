@@ -1,7 +1,6 @@
 // register logika - prima podatke, hashira password, poziva userModel za INSERT u bazu, vraća response
 import bycrypt from "bcrypt"
 import { findByEmail, createUser } from "../models/userModel.js" 
-import { buildCheckFunction } from "express-validator"
 import jwt from 'jsonwebtoken'
 
 const secretKey = process.env.JWT_SECRET
@@ -16,7 +15,7 @@ export const register = async (req, res) => {
             return res.status(400).json({ message: "User already exists" })
         }
 
-        const hashedPassword = await bycrypt.hash(password, 10)  // šta je ovo 10 ?? 
+        const hashedPassword = await bycrypt.hash(password, 10) 
 
         const newUser = await createUser(email, hashedPassword, nickname, dateOfBirth, profilePicture)
 
