@@ -1,0 +1,64 @@
+# Roadmap
+
+Checklista razvoja. Kvačicu (`[x]`) stavljaš kad je korak pregledan i commitan.
+
+**Način rada:** Claude objašnjava i zadaje zadatke, Tea piše kod, Claude pregledava.
+Za prebacivanje napiši *„preuzmi ovaj korak"* i onda taj korak piše Claude, uz objašnjenje.
+
+---
+
+## Faza 0: Temelji
+
+### 0.1 Git higijena
+- [ ] Commitati trenutni shadcn rad
+- [ ] `.gitignore` u korijenu repoa (`node_modules/`, `.env`, `dist/`, `uploads/`)
+- [ ] Maknuti backend `node_modules` iz gita (`git rm -r --cached`)
+- [ ] Premjestiti `backend/`, `frontend/` i `README.md` iz `web-app/` u korijen repoa (`git mv`)
+- [ ] Očistiti backend `package.json` (maknuti react/tailwind/vite/express-validator, dodati `dev` skriptu)
+- [ ] Premjestiti `forest.jpg` u `frontend/public/`
+
+### 0.2 Baza i migracije
+- [ ] Nova baza `selfimprovement_dev`
+- [ ] `node-pg-migrate` + prva migracija: tablica `users`
+- [ ] Model usklađen sa shemom (snake_case u bazi, camelCase u JS-u), obrisan `database.sql`
+
+### 0.3 Backend auth
+- [ ] `config.js` (env varijable, fail fast)
+- [ ] Login: jedan odgovor, JWT u httpOnly cookieju, ista poruka za krivi email i krivu lozinku
+- [ ] `requireAuth` middleware
+- [ ] `GET /api/auth/me`, `POST /api/auth/logout`
+- [ ] Zod `validate(schema)` middleware
+- [ ] `AppError` + centralni `errorHandler` + 404 handler
+- [ ] CORS s `credentials: true`
+
+### 0.4 Frontend temelji
+- [ ] `.env` → `VITE_API_URL`
+- [ ] `src/api/client.js` (axios instanca)
+- [ ] `AuthContext` + `useAuth()`
+- [ ] `ProtectedRoutes` preko contexta
+- [ ] `AppLayout` (sidebar + `<Outlet/>`), placeholder rute, 404 stranica
+- [ ] Login/Register: API klijent, shadcn komponente, tekstovi na engleskom
+- [ ] Logout preko backenda
+- [ ] README ažuriran
+
+---
+
+## Faza 1: Navike (od baze do sučelja)
+- [ ] Migracija: `habits`, `habit_logs`
+- [ ] API: CRUD navika + označavanje (`PUT`/`DELETE /api/habits/:id/logs/:date`)
+- [ ] Streak za daily, weekly i monthly navike
+- [ ] Dashboard: dohvaćanje podataka ručno (`useEffect`)
+- [ ] Refaktor na TanStack Query (+ optimistično ažuriranje)
+- [ ] AddHabitDialog: react-hook-form + zod
+- [ ] Stranica `/habits` (uređivanje, arhiviranje)
+- [ ] Integracijski testovi (Vitest + supertest)
+
+## Faza 2: Statistika navika
+## Faza 3: Bilježnice i dnevnik
+## Faza 4: Planovi i ciljevi
+## Faza 5: Kalendar
+## Faza 6: Mediji (slike, video)
+## Faza 7: Dijeljenje s drugim korisnicima
+## Faza 8: Mobitel (PWA) i deploy
+
+*Faze 2–8 detaljno razrađujemo kad dođemo do njih.*
