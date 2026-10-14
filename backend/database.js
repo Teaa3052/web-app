@@ -5,14 +5,10 @@ import dotenv from 'dotenv' //uvoz .env varijabli iz datoteke
 dotenv.config() // učita .env podatke 
 
 //kreiranje bazena konekcija pomoću .env postavki 
-
 const pool = new Pool({
-    host: process.env.DB_HOST, // adresa servera baze 
-    user: process.env.DB_USER, // korisničko ime
-    password: process.env.DB_PASSWORD, // lozinka
-    database: process.env.DB_NAME, // ime baze 
-    port: process.env.DB_PORT // broj porta
+    connectionString: process.env.DATABASE_URL
 })
+
 
 // funkcija koja testira vezu s bazom 
 async function testConnection() {

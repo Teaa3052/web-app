@@ -3,15 +3,15 @@ import pool from '../database.js' // uvozim vezu s bazom podataka koju sam napra
 
 
 // funkcija 'kreiraj usera' koja prima 5 parametara
-async function createUser (email, hashedPassword, nickname, dateOfBirth, profilePicture) {
+async function createUser (email, hashedPassword, nickname ) {
     const query = `
-        INSERT INTO users (email, password, nickname, birthday, profile_picture)
+        INSERT INTO users (email, password, nickname)
         VALUES ($1, $2, $3, $4, $5) 
         RETURNING users_id, email, nickname
     ` // SQL upit koji kaže bazi 'Stavi nove podatke u tablicu USER', nakon unesenog vrati mi id, email i nickname novog usera
       // ove VALUES $1, $2, ... su ''ruparice'' - sigurnost
 
-    const values = [email, hashedPassword, nickname, dateOfBirth, profilePicture] // niz s pravim vrijednostima koje idu u ''ruparice''
+    const values = [email, hashedPassword, nickname ] // niz s pravim vrijednostima koje idu u ''ruparice''
 
     const result = await pool.query(query, values)
     return result.rows[0]
