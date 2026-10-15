@@ -2,8 +2,9 @@
 import bycrypt from "bcrypt"
 import { findByEmail, createUser } from "../models/userModel.js" 
 import jwt from 'jsonwebtoken'
+import { config } from "../config.js"
 
-const secretKey = process.env.JWT_SECRET
+const secretKey = config.jwtSecret
 
 export const register = async (req, res) => {
     try {
