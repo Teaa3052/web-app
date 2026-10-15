@@ -20,7 +20,11 @@ export const errorHandler = (err, req, res, next) => {
 
     // naše namjerne greške - poruka je sigurna za prikaz korisniku
     if (err instanceof AppError) {
-        return res.status(err.statusCode).json({ message: err.message })
+        const body = { message: err.message }
+        if (err.details) {
+            body.errors = err.details // npr. greške validacije po poljima, za prikaz uz polja forme
+        }
+        return res.status(err.statusCode).json(body)
     }
 
     // sve ostalo je neočekivano: detalje ispisujemo samo na serveru, korisnik dobije općenitu poruku
