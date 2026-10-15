@@ -5,6 +5,7 @@ The main goal is **learning full-stack development**: architecture, how the laye
 A working app is the second goal.
 
 Progress is tracked in [docs/ROADMAP.md](docs/ROADMAP.md).
+Tea's learning notes live in `notes/` as Markdown files. The folder is gitignored (local only), and new notes go there.
 
 ## Stack
 
