@@ -6,9 +6,8 @@ import jwt from 'jsonwebtoken'
 const secretKey = process.env.JWT_SECRET
 
 export const register = async (req, res) => {
-    console.log("Register called, body:", req.body)
     try {
-        const {email, password, nickname, dateOfBirth, profilePicture} = req.body
+        const {email, password, nickname} = req.body
 
         const existing = await findByEmail(email)
         if (existing) {
@@ -17,7 +16,7 @@ export const register = async (req, res) => {
 
         const hashedPassword = await bycrypt.hash(password, 10) 
 
-        const newUser = await createUser(email, hashedPassword, nickname, dateOfBirth, profilePicture)
+        const newUser = await createUser(email, hashedPassword, nickname)
 
         res.status(201).json({
             message: "User created",
@@ -38,7 +37,7 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: "User not found" })
         }
 
-        const match = await bycrypt.compare(password, user.password)
+        const match = await bycrypt.compare(password, user.passwordHash)
         if (!match) {
             return res.status(400).json({ message: "Invalid password" })
         }
@@ -56,7 +55,6 @@ export const login = async (req, res) => {
                 id: user.id,
                 email: user.email,
                 nickname: user.nickname, 
-                role: user.role
              }, 
              secretKey,
             {expiresIn: '1h'}) 

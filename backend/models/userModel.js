@@ -2,16 +2,16 @@
 import pool from '../database.js' // uvozim vezu s bazom podataka koju sam napravila 
 
 
-// funkcija 'kreiraj usera' koja prima 5 parametara
-async function createUser (email, hashedPassword, nickname ) {
+// funkcija 'kreiraj usera' koja prima 3 parametra
+async function createUser (email, passwordHash, nickname ) {
     const query = `
-        INSERT INTO users (email, password, nickname)
-        VALUES ($1, $2, $3, $4, $5) 
-        RETURNING users_id, email, nickname
-    ` // SQL upit koji kaže bazi 'Stavi nove podatke u tablicu USER', nakon unesenog vrati mi id, email i nickname novog usera
+        INSERT INTO users (email, password_hash, nickname)
+        VALUES ($1, $2, $3) 
+        RETURNING id, email, nickname, created_at AS "createdAt"
+    ` // SQL upit koji kaže bazi 'Stavi nove podatke u tablicu USER', nakon unesenog vrati mi id, email, nickname i createdAt novog usera
       // ove VALUES $1, $2, ... su ''ruparice'' - sigurnost
 
-    const values = [email, hashedPassword, nickname ] // niz s pravim vrijednostima koje idu u ''ruparice''
+    const values = [email, passwordHash, nickname ] // niz s pravim vrijednostima koje idu u ''ruparice''
 
     const result = await pool.query(query, values)
     return result.rows[0]
@@ -20,7 +20,9 @@ async function createUser (email, hashedPassword, nickname ) {
 }
 
 async function findByEmail(email) {
-    const query = `SELECT * FROM users WHERE email = $1` // daj mi SVE o tom korisniku, ali samo onog čiji email odgovara
+    const query = `
+    SELECT id, email, password_hash AS "passwordHash", nickname, created_at AS "createdAt"
+    FROM users WHERE email = $1` // daj mi navedene podatke o korisniku s trazenim emailom 
     const values = [email]
 
     const result = await pool.query(query, values)

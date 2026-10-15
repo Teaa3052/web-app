@@ -20,10 +20,10 @@ Za prebacivanje napiši _„preuzmi ovaj korak"_ i onda taj korak piše Claude, 
 
 ### 0.2 Baza i migracije
 
-- [ ] Nova baza `selfimprovement_dev` + zasebni korisnik baze za aplikaciju
-- [ ] `.env` → `DATABASE_URL`, `.env.example` u gitu
-- [ ] `node-pg-migrate` + prva migracija: tablica `users`
-- [ ] Model usklađen sa shemom (snake_case u bazi, camelCase u JS-u), obrisan `database.sql`
+- [x] Nova baza `selfimprovement_dev` + zasebni korisnik baze za aplikaciju
+- [x] `.env` → `DATABASE_URL`, `.env.example` u gitu
+- [x] `node-pg-migrate` + prva migracija: tablica `users`
+- [x] Model usklađen sa shemom (snake_case u bazi, camelCase u JS-u), obrisan `database.sql`
 
 ### 0.3 Backend auth
 
