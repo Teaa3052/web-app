@@ -1,28 +1,23 @@
 // authMiddleware.js sadrži middleware funkcije za autentifikaciju i autorizaciju (provjera tokena, uloga korisnika, pristupnih prava)
+import { AppError } from "../utils/AppError.js"
+import jwt from 'jsonwebtoken'
+import { config } from "../config.js"
 
-export const authenticateToken = ( req, res, next) => {
+export const requireAuth = ( req, res, next) => {
 
-    // Dohvati token iz autorizacijskoj hedera???? 
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
+    // Dohvati token iz cookija 
+    const token = req.cookies.token
 
     // ako je token false, vrati error 
     if (!token) {
-        return res.status(401).json({
-            message: "Unauthorized. No token provided."
-        })
+        throw new AppError(401, 'Not authorized')
     }
     try {
-        // verificiraj token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-
-        req.user = decoded // spremi korisnikove podatke u zahtjev
-
+        const payload = jwt.verify(token, config.jwtSecret) // provjeri potpis i istek; vraća { id, iat, exp }
+        req.user = { id: payload.id } // zapamti tko je korisnik, da ga controller zna
         next() // nastavi do sljedećeg middlewarea ili rute
     } catch (err) {
-        return res.status(403).json({
-            message: "Forbidden - Invalid or expired token",
-        })
+        throw new AppError(401, 'Not authorized')
     }
 }
 

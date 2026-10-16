@@ -30,4 +30,15 @@ async function findByEmail(email) {
     // ako korisik postoji vraća podatke, ako ne vraća Undefined
 }
 
-export { createUser, findByEmail }
+async function findById (id) {
+    const query = `
+    SELECT id, email, nickname, created_at AS "createdAt"
+    FROM users WHERE id = $1` // daj mi navedene podatke o korisniku s trazenim id-om
+    const values = [id]
+
+    const result = await pool.query(query, values)
+    return result.rows[0]
+    // ako korisik postoji vraća podatke, ako ne vraća Undefined
+}
+
+export { createUser, findByEmail, findById }

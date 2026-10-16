@@ -1,5 +1,6 @@
 import cors from 'cors'
 import helmet from 'helmet'
+import cookieParser from 'cookie-parser'
 import express from 'express' // učitava express modul - to je biblioteka koja olakšava izradu web servera u Node.js
 import { config } from './config.js' // port, CORS origin i ostale postavke iz .env
 import authRoutes from './routes/auth.js'
@@ -12,13 +13,15 @@ app.use(helmet()) // postavlja sigurnosne HTTP headere
 
 const corsOptions = {
     origin: config.corsOrigin, // ograničava samo za moj front
-    credentials: true, // dopušta frontendu da šalje i prima cookieje (trebat će za login u 0.3.4)
+    credentials: true, // dopušta frontendu da šalje i prima cookieje (token za login)
 }
 
 app.use(cors(corsOptions)) // omogućava komunikaciju između fornt i backenda
 // CORS ide prije express.json(), da i odgovor na neispravan JSON ima CORS headere
 
 app.use(express.json()) // čita JSON podatke i pretvara u JS objekte
+
+app.use(cookieParser()) // čita cookieje iz zahtjeva u objekt req.cookies (npr. req.cookies.token)
 
 app.get('/', (req, res) =>  {
     // Definira rutu: kada netko pošalje GET zahtjev na root URL ('/'), poziva se ova funkcija (tzv. callback)

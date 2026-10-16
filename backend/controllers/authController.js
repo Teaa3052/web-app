@@ -1,6 +1,6 @@
 // register logika - prima podatke, hashira password, poziva userModel za INSERT u bazu, vraća response
 import bycrypt from "bcrypt"
-import { findByEmail, createUser } from "../models/userModel.js"
+import { findByEmail, createUser, findById } from "../models/userModel.js"
 import jwt from 'jsonwebtoken'
 import { config } from "../config.js"
 import { AppError } from "../utils/AppError.js"
@@ -61,4 +61,27 @@ export const login = async (req, res) => {
             nickname: user.nickname
         }
     })
+}
+
+
+// vraća podatke prijavljenog korisnika (requireAuth je prije ovog zapisao req.user)
+export const me = async (req, res) => {
+    const user = await findById(req.user.id) // dohvati svježe podatke iz baze
+
+    // token je ispravan, ali korisnik više ne postoji (npr. obrisan račun)
+    if (!user) {
+        throw new AppError(401, 'Not authorized')
+    }
+
+    res.status(200).json({ user })
+}
+
+export const logout = (req, res) => {
+    res.clearCookie('token', {
+        httpOnly: true,
+        sameSite: 'lax', 
+        secure: config.isProduction
+    })
+
+    res.status(200).json({ message: 'Logged out' })
 }

@@ -29,8 +29,8 @@ Za prebacivanje napiši _„preuzmi ovaj korak"_ i onda taj korak piše Claude, 
 
 - [x] `config.js` (env varijable, fail fast) // proučit
 - [x] Login: jedan odgovor, JWT u httpOnly cookieju, ista poruka za krivi email i krivu lozinku
-- [ ] `requireAuth` middleware
-- [ ] `GET /api/auth/me`, `POST /api/auth/logout`
+- [x] `requireAuth` middleware
+- [x] `GET /api/auth/me`, `POST /api/auth/logout`
 - [x] Zod `validate(schema)` middleware
 - [x] `AppError` + centralni `errorHandler` + 404 handler // proučit
 - [x] CORS s `credentials: true` // proučit
