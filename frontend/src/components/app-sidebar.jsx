@@ -2,7 +2,7 @@ import * as React from "react"
 import { useNavigate } from "react-router-dom"
 import { Home, ListChecks, BarChart3, LogOut, NotebookPen, Waypoints, Settings  } from "lucide-react"
 import { Link } from "react-router-dom"
-
+import { useAuth } from "@/context/AuthContext";
 
 import {
   Sidebar,
@@ -29,9 +29,11 @@ const navItems = [
 export function AppSidebar({ ...props }) {
   const navigate = useNavigate()
 
-  const handleLogout = () => {
-    localStorage.removeItem("token")
-    navigate("/homepage")
+  const { logout } = useAuth() // funckija za odjavu 
+
+  const handleLogout = async () => {
+    await logout() // backend obriše cookie, a context zaboravi korisnika ( user = null )
+    navigate("/login")
   }
 
   return (

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
-import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { api } from "@/api/client"
+
 
 
 function Register() {
@@ -17,18 +18,16 @@ function Register() {
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/register', {
-                nickname: data.name,
-                email: data.email,
-                password: data.password,
-                dateOfBirth: null, //privremeno 
-                profilePicture: null
-            }) 
+                await api.post('/auth/register', { 
+                    nickname: data.name,
+                    email: data.email,
+                    password: data.password
+                 })
 
-            console.log("Registration successful!", response.data); 
-            navigate("/login");
-
-        } catch (error) {
+                console.log("Registration successful!"); 
+                navigate("/login");
+        }
+        catch (error) {
             setError("root", { message: error.response?.data?.message || "Registration failed" });
         }
     }

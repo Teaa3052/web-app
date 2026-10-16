@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 function Login() {
 
@@ -9,21 +9,18 @@ function Login() {
         handleSubmit,
         setError,
         formState: { errors },
-    } = useForm();
+    } = useForm()
 
 
-    const navigate = useNavigate(); 
+    const navigate = useNavigate() 
+    const { login } = useAuth() 
 
     const onSubmit = async (data) => {
         try {
-            const response = await axios.post('http://localhost:3000/api/auth/login', {
-                email: data.email,
-                password: data.password
-            });
-
-            localStorage.setItem('token', response.data.token);
-            navigate("/dashboard");
-        } catch (error) {
+            await login(data.email, data.password)
+            navigate("/dashboard")
+            }
+        catch (error) {
             setError("root", { message: error.response?.data?.message || error.message || "Login failed" })
         }
     };
@@ -64,10 +61,6 @@ function Login() {
                     placeholder="Password"
                     {...register("password", { 
                         required: "Password is required",
-                        minLength: {
-                            value: 8,
-                            message: "Min 8 characters"
-                        }
                     })}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
