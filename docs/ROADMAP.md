@@ -37,14 +37,14 @@ Za prebacivanje napiši _„preuzmi ovaj korak"_ i onda taj korak piše Claude, 
 
 ### 0.4 Frontend temelji
 
-- [ ] `.env` → `VITE_API_URL`
-- [ ] `src/api/client.js` (axios instanca)
-- [ ] `AuthContext` + `useAuth()`
-- [ ] `ProtectedRoutes` preko contexta
-- [ ] `AppLayout` (sidebar + `<Outlet/>`), placeholder rute, 404 stranica
-- [ ] Login/Register: API klijent, shadcn komponente, tekstovi na engleskom
-- [ ] Logout preko backenda
-- [ ] README ažuriran
+- [x] `.env` → `VITE_API_URL`
+- [x] `src/api/client.js` (axios instanca)
+- [x] `AuthContext` + `useAuth()`
+- [x] `ProtectedRoutes` preko contexta
+- [x] `AppLayout` (sidebar + `<Outlet/>`), placeholder rute, 404 stranica
+- [x] Login/Register: API klijent, shadcn komponente, tekstovi na engleskom
+- [x] Logout preko backenda
+- [x] README ažuriran
 
 ---
 
