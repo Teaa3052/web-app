@@ -1,7 +1,5 @@
 import { useState } from "react"
 import HabitCard from "@/components/HabitCard"
-import { AppSidebar } from "@/components/app-sidebar"
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import AddHabitDialog from "@/components/AddHabitDialog"
 
 function Dashboard() {
@@ -16,27 +14,22 @@ function Dashboard() {
         )
     }
 
+    // sidebar i gornju traku sada daje AppLayout, pa ovdje ostaje samo sadržaj stranice
     return (
-        <SidebarProvider>
-            <AppSidebar />
-            <main className="w-full p-6">
-                <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-4">
-                        <SidebarTrigger />
-                        <h1 className="text-2xl font-bold">Dashboard</h1>
-                    </div>
-                    <AddHabitDialog onAddHabit={(newHabit) => {
-                        setHabits(prev => [...prev, { ...newHabit, id: Date.now(), streak: 0, doneToday: false }])
-                    }} />
-                </div>
+        <>
+            <div className="flex items-center justify-between mb-6">
+                <h1 className="text-2xl font-bold">Dashboard</h1>
+                <AddHabitDialog onAddHabit={(newHabit) => {
+                    setHabits(prev => [...prev, { ...newHabit, id: Date.now(), streak: 0, doneToday: false }])
+                }} />
+            </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {habits.map(habit => (
-                        <HabitCard key={habit.id} habit={habit} onToggleToday={onToggleToday} />
-                    ))}
-                </div>
-            </main>
-        </SidebarProvider>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {habits.map(habit => (
+                    <HabitCard key={habit.id} habit={habit} onToggleToday={onToggleToday} />
+                ))}
+            </div>
+        </>
     )
 }
 export default Dashboard
