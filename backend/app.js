@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser'
 import express from 'express' // učitava express modul - to je biblioteka koja olakšava izradu web servera u Node.js
 import { config } from './config.js' // port, CORS origin i ostale postavke iz .env
 import authRoutes from './routes/auth.js'
+import habitRoutes from './routes/habits.js'
 import { notFound, errorHandler } from './middleware/errorHandler.js'
 
 const app = express() // instanca Express aplikacije - app je moj server pomoću kojeg definiram rute
@@ -32,6 +33,7 @@ app.get('/', (req, res) =>  {
 }) 
 
 app.use("/api/auth", authRoutes)
+app.use("/api/habits", habitRoutes)
 
 // ova dva moraju biti NAKON svih ruta: zahtjev do njih dođe samo ako ga nijedna ruta nije obradila
 app.use(notFound) // nepostojeća ruta -> 404 JSON

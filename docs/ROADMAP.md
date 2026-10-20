@@ -50,7 +50,7 @@ Za prebacivanje napiši _„preuzmi ovaj korak"_ i onda taj korak piše Claude, 
 
 ## Faza 1: Navike (od baze do sučelja)
 
-- [ ] Migracija: `habits`, `habit_logs`
+- [x] Migracija: `habits`, `habit_logs`
 - [ ] API: CRUD navika + označavanje (`PUT`/`DELETE /api/habits/:id/logs/:date`)
 - [ ] Streak za daily, weekly i monthly navike
 - [ ] Dashboard: dohvaćanje podataka ručno (`useEffect`)
