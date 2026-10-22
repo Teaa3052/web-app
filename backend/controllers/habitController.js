@@ -1,6 +1,7 @@
 import { findHabitsByUser, createHabit, findHabitById, addLog, removeLog, findLogsByUser } from "../models/habitModel.js";
 import { AppError } from "../utils/AppError.js"
 import { periodStart } from "../utils/dates.js"
+import { calculateStreak  } from "../utils/streak.js";
 
 // sve aktivne navike korisnika, svaka s informacijom je li odrađena u ovom periodu
 export const getHabits = async (req, res) => {
@@ -23,7 +24,7 @@ export const getHabits = async (req, res) => {
         // odrađeno ako barem jedan datum pada u taj isti period
         const doneInPeriod = dates.some((date) => periodStart(date, habit.frequency) === currentPeriod)
 
-        return { ...habit, doneInPeriod, streak: 0 } // streak dolazi u dijelu B
+        return { ...habit, doneInPeriod, streak: calculateStreak(dates, habit.frequency, today) } 
     })
 
     // 3. pošalji nove navike (s dodanim poljima)
