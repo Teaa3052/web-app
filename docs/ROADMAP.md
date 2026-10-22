@@ -58,7 +58,7 @@ Okvirni datumi su za orijentaciju. Ako kasnimo više od dan-dva, ubrzavamo (Clau
 - [x] `GET` i `POST /api/habits`
 - [x] Označavanje: `PUT`/`DELETE /api/habits/:id/logs/:date`
 - [x] `GET /api/habits?today=...`: „odrađeno u ovom periodu" + streak (daily, weekly, monthly)
-- [ ] Arhiviranje: `DELETE /api/habits/:id`
+- [x] Arhiviranje: `DELETE /api/habits/:id`
 
 ### Navike: frontend (do 27. 10.)
 
