@@ -1,10 +1,12 @@
 import { AppError } from '../utils/AppError.js'
 
 // Generički middleware za validaciju: provjeri dio zahtjeva prema zod shemi.
-// source = koji dio zahtjeva provjeravamo: 'body' (tijelo, zadano) ili 'params' (dijelovi URL-a, npr. :id)
+// source = koji dio zahtjeva provjeravamo: 'body' (tijelo, zadano), 'params' (dijelovi URL-a, npr. :id)
+//          ili 'query' (dio iza ? u URL-u, npr. ?today=2026-10-22)
 // Korištenje u ruti:
 //   router.post('/register', validate(registerSchema), register)
 //   router.put('/:id/logs/:date', validate(logParamsSchema, 'params'), markDone)
+//   router.get('/', validate(habitsQuerySchema, 'query'), getHabits)
 export const validate = (schema, source = 'body') => (req, res, next) => {
     const result = schema.safeParse(req[source])
 
@@ -19,6 +21,11 @@ export const validate = (schema, source = 'body') => (req, res, next) => {
 
     // podaci su ispravni -> zamijeni ih očišćenim podacima (npr. email malim slovima, id kao broj)
     // i bez polja koja shema ne poznaje
-    req[source] = result.data
+    if (source === 'query') {
+        // u Expressu 5 req.query se ne može izravno prepisati (samo se čita), pa ga zamijenimo ovako
+        Object.defineProperty(req, 'query', { value: result.data, writable: true })
+    } else {
+        req[source] = result.data
+    }
     next()
 }

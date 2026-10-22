@@ -1,7 +1,6 @@
 // SQL upiti za navike - svaki upit radi samo s navikama jednog korisnika (user_id)
 import pool from '../database.js'
 
-
 // sve aktivne navike korisnika 
 async function findHabitsByUser(userId) {
     const query = `
@@ -64,4 +63,16 @@ async function removeLog (habitId, date) {
 
 }
 
-export {findHabitsByUser, createHabit, findHabitById, addLog, removeLog }
+async function findLogsByUser(userId) {
+    const query = `
+    SELECT l.habit_id AS "habitId", to_char(l.log_date, 'YYYY-MM-DD') AS "logDate"
+    FROM habit_logs l
+    JOIN habits h ON h.id = l.habit_id
+    WHERE h.user_id = $1 AND h.archived_at IS NULL
+    `
+    const values = [userId]
+    const result = await pool.query(query, values)
+    return result.rows
+}
+
+export {findHabitsByUser, createHabit, findHabitById, addLog, removeLog, findLogsByUser }

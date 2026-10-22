@@ -9,3 +9,7 @@ export const logParamsSchema = z.object ({
     id: z.coerce.number('Invalid habit id').int('Invalid habit id').positive('Invalid habit id'),
     date: z.iso.date('Invalid date')
 })
+
+export const habitsQuerySchema = z.object ({
+    today: z.iso.date('Invalid date')
+})

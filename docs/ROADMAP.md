@@ -48,18 +48,38 @@ Za prebacivanje napiši _„preuzmi ovaj korak"_ i onda taj korak piše Claude, 
 
 ---
 
-## Faza 1: Navike (od baze do sučelja)
+## Cilj do 1. 11.: navike + osnovna statistika, online
 
+Okvirni datumi su za orijentaciju. Ako kasnimo više od dan-dva, ubrzavamo (Claude preuzima više koda).
+
+### Navike: backend (do 24. 10.)
 - [x] Migracija: `habits`, `habit_logs`
-- [ ] API: CRUD navika + označavanje (`PUT`/`DELETE /api/habits/:id/logs/:date`)
-- [ ] Streak za daily, weekly i monthly navike
-- [ ] Dashboard: dohvaćanje podataka ručno (`useEffect`)
+- [x] `GET` i `POST /api/habits`
+- [x] Označavanje: `PUT`/`DELETE /api/habits/:id/logs/:date`
+- [ ] `GET /api/habits?today=...`: „odrađeno u ovom periodu" + streak (daily, weekly, monthly)
+- [ ] Arhiviranje: `DELETE /api/habits/:id`
+
+### Navike: frontend (do 27. 10.)
+- [ ] Dashboard dohvaća navike s backenda (`useEffect`)
+- [ ] Dodavanje navike (AddHabitDialog → `POST`)
+- [ ] Označavanje (checkbox → `PUT`/`DELETE`), streak na kartici
+- [ ] Brisanje (arhiviranje) navike
+
+### Statistika (do 29. 10.)
+- [ ] Backend: postotak izvršenja i odrađeni dani u zadnjih 30 dana
+- [ ] Frontend: stranica `/stats` s grafom
+
+### Online (do 31. 10.)
+- [ ] Računi: Neon (baza) i Render (server) — otvara Tea
+- [ ] Express servira i frontend (jedna adresa za sve)
+- [ ] Deploy, migracije na produkcijskoj bazi, provjera s mobitela
+
+### Nakon 1. 11. (iz prvotnog plana faze 1)
 - [ ] Refaktor na TanStack Query (+ optimistično ažuriranje)
-- [ ] AddHabitDialog: react-hook-form + zod
-- [ ] Stranica `/habits` (uređivanje, arhiviranje)
+- [ ] Stranica `/habits` (preimenovanje, popis arhiviranih)
 - [ ] Integracijski testovi (Vitest + supertest)
 
-## Faza 2: Statistika navika
+## Faza 2: Statistika navika (proširenje)
 
 ## Faza 3: Bilježnice i dnevnik
 
