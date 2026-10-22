@@ -75,4 +75,16 @@ async function findLogsByUser(userId) {
     return result.rows
 }
 
-export {findHabitsByUser, createHabit, findHabitById, addLog, removeLog, findLogsByUser }
+async function archiveHabit(habitId, userId) {
+    const query = `
+    UPDATE habits 
+    SET archived_at = now()
+    WHERE id = $1 AND user_id = $2 AND archived_at IS NULL
+    RETURNING id
+    `
+    const values = [habitId, userId]
+    const result = await pool.query(query, values)
+    return result.rows[0]
+}
+
+export {findHabitsByUser, createHabit, findHabitById, addLog, removeLog, findLogsByUser, archiveHabit }

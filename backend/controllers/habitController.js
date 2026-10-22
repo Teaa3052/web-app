@@ -1,4 +1,4 @@
-import { findHabitsByUser, createHabit, findHabitById, addLog, removeLog, findLogsByUser } from "../models/habitModel.js";
+import { findHabitsByUser, createHabit, findHabitById, addLog, removeLog, findLogsByUser, archiveHabit } from "../models/habitModel.js";
 import { AppError } from "../utils/AppError.js"
 import { periodStart } from "../utils/dates.js"
 import { calculateStreak  } from "../utils/streak.js";
@@ -67,4 +67,14 @@ export const unmarkDone = async (req, res) => {
     res.status(204).end()
 }
 
+export const deleteHabit = async (req, res) => {
+    const { id } = req.params
+
+    const habit = await archiveHabit(id, req.user.id)
+    if(!habit) {
+        throw new AppError(404, 'Habit not found')
+    }
+    res.status(204).end()
+
+}
 
