@@ -62,7 +62,7 @@ Okvirni datumi su za orijentaciju. Ako kasnimo više od dan-dva, ubrzavamo (Clau
 
 ### Navike: frontend (do 27. 10.)
 
-- [ ] Dashboard dohvaća navike s backenda (`useEffect`)
+- [x] Dashboard dohvaća navike s backenda (`useEffect`)
 - [ ] Dodavanje navike (AddHabitDialog → `POST`)
 - [ ] Označavanje (checkbox → `PUT`/`DELETE`), streak na kartici
 - [ ] Brisanje (arhiviranje) navike

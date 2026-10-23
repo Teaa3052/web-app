@@ -3,8 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Flame } from "lucide-react"
 
+const periodLabel = {
+  daily: 'today',
+  weekly: 'this week',
+  monthly: 'this month',
+}
+
 function HabitCard({ habit, onToggleToday }) {
-  const { name, streak, doneToday } = habit
+  const { name, frequency, streak, doneInPeriod } = habit
+
 
   return (
     <Card className="w-full max-w-sm">
@@ -17,12 +24,12 @@ function HabitCard({ habit, onToggleToday }) {
       </CardHeader>
       <CardContent className="flex items-center gap-3">
         <Checkbox
-          checked={doneToday}
+          checked={doneInPeriod}
           onCheckedChange={() => onToggleToday(habit.id)}
           id={`habit-${habit.id}`}
         />
         <label htmlFor={`habit-${habit.id}`} className="text-sm text-muted-foreground">
-          {doneToday ? "Odrađeno danas" : "Označi kao odrađeno"}
+          {doneInPeriod ? `Done ${periodLabel[frequency]}` : "Mark as done"}
         </label>
       </CardContent>
     </Card>
