@@ -11,8 +11,8 @@ export const getHabits = async (req, res) => {
     const habits = await findHabitsByUser(req.user.id)
     const logs = await findLogsByUser(req.user.id)
 
-    // Od kojeg datuma frontend treba zapise ponedjeljak tjenda u kojem je 1. u mjesecu
-    // npr, today = '2026-10-27' -> prvi u mjesecu '2026-10-01' -> ponedjeljeka tog tjedna '2026-09-29'
+    // Od kojeg datuma frontend treba zapise ponedjeljak tjedna u kojem je 1. u mjesecu
+    // npr, today = '2026-10-27' -> prvi u mjesecu '2026-10-01' -> ponedjeljak tog tjedna '2026-09-28'
 
     const from = periodStart(periodStart(today, 'monthly'), 'weekly')
 
