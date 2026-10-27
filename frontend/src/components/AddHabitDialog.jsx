@@ -16,15 +16,23 @@ function AddHabitDialog ({ onAddHabit }) {
     const [open, setOpen] = useState(false)
     const [name, setName] = useState("")
     const [frequency, setFrequency] = useState("daily")
+    const [error, setError] = useState(null)
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         if (!name.trim()) return
 
-        onAddHabit({ name, frequency })
-        setName("")
-        setFrequency("daily")
-        setOpen(false)
+        try {
+            await onAddHabit({ name, frequency }) // cekaj da Dashboard spremi naviku na backend
+            // ovo ispod izvrši samo ako je spremanje uspjelo
+            setName("")
+            setFrequency("daily")
+            setError(null)
+            setOpen(false)
+        } catch (err) {
+            // spremanje nije uspjelo: dijalog ostaje otvoren i pokaže poruku
+            setError(err.response?.data?.message || "Could not add habit")
+        }
     }
 
     return (
@@ -67,7 +75,7 @@ function AddHabitDialog ({ onAddHabit }) {
                             </select>
                         </div>
                     </div>
-
+                    { error && <p className="text-sm text-destructive">{error}</p>}
                     <DialogFooter>
                         <Button type="submit">Save Habit</Button>
                     </DialogFooter>

@@ -15,6 +15,13 @@ function Dashboard() {
         )
     }
 
+    async function addHabit(newHabit) {
+        const response = await api.post('/habits', newHabit) // newHabit = { name, frequency } iz dijaloga
+        const habit = response.data.habit // backend vrati { habit: {id,name,frequency,createdAt}}
+        setHabits(prev => [...prev, { ...habit, doneInPeriod: false, streak: 0}]) // nova navika još nema zapisa
+    }
+
+
     useEffect(() => {
         async function loadHabits() {
             try {
@@ -42,11 +49,8 @@ function Dashboard() {
         <>
             <div className="flex items-center justify-between mb-6">
                 <h1 className="text-2xl font-bold">Dashboard</h1>
-                <AddHabitDialog onAddHabit={(newHabit) => {
-                    setHabits(prev => [...prev, { ...newHabit, id: Date.now(), streak: 0, doneInPeriod: false }])
-                }} />
+                <AddHabitDialog onAddHabit={addHabit} />
             </div>
-
             {habits.length === 0 ? (
                 <p className="text-muted-foreground">No habits yet. Add your first one!</p>
             ) : (
