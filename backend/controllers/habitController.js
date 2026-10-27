@@ -11,7 +11,13 @@ export const getHabits = async (req, res) => {
     const habits = await findHabitsByUser(req.user.id)
     const logs = await findLogsByUser(req.user.id)
 
-    // 2. svaku naviku pretvori u novu: ista polja + doneInPeriod i streak
+    // Od kojeg datuma frontend treba zapise ponedjeljak tjenda u kojem je 1. u mjesecu
+    // npr, today = '2026-10-27' -> prvi u mjesecu '2026-10-01' -> ponedjeljeka tog tjedna '2026-09-29'
+
+    const from = periodStart(periodStart(today, 'monthly'), 'weekly')
+
+    
+    // 2. svaku naviku pretvori u novu: ista polja + doneInPeriod, streak i dates
     const habitsWithStatus = habits.map((habit) => {
         // datumi samo ove navike, npr. ['2026-10-21', '2026-10-22']
         const dates = logs
@@ -24,7 +30,12 @@ export const getHabits = async (req, res) => {
         // odrađeno ako barem jedan datum pada u taj isti period
         const doneInPeriod = dates.some((date) => periodStart(date, habit.frequency) === currentPeriod)
 
-        return { ...habit, doneInPeriod, streak: calculateStreak(dates, habit.frequency, today) } 
+        return { 
+            ...habit,
+            doneInPeriod, 
+            streak: calculateStreak(dates, habit.frequency, today),
+            dates: dates.filter((date) => date >= from), // samo datumi koje Dashboard pokazuje
+         } 
     })
 
     // 3. pošalji nove navike (s dodanim poljima)
