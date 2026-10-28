@@ -63,16 +63,30 @@ export function monthGrid(today) {
     return weeks
 }
 
-// Tjedni mjeseca u kojem je today, za red tjednih navika. Numerirani od 1, isti tjedni kao u monthGrid.
-// Vraća: [{ start: '2026-09-28', number: 1, isCurrent: false, isFuture: false }, ...]
+// Periodi za red tjedne ili mjesečne navike. Svaki period je jedan kvadratić:
+//   { start: početak perioda, label: tekst u kvadratiću, isCurrent: period u kojem je danas, isFuture: još nije došao }
+
+// Tjedni mjeseca u kojem je today, numerirani od 1 (isti tjedni kao u monthGrid).
+// Vraća: [{ start: '2026-09-28', label: '1', isCurrent: false, isFuture: false }, ...]
 export function monthWeeks(today) {
     const currentWeek = periodStart(today, 'weekly')
     return monthGrid(today).map((week, i) => ({
         start: week[0].date, // ponedjeljak tog tjedna
-        number: i + 1,
+        label: String(i + 1),
         isCurrent: week[0].date === currentWeek,
         isFuture: week[0].date > currentWeek,
     }))
+}
+
+// Samo tekući mjesec, kao niz s jednim periodom (isti oblik kao monthWeeks).
+// Vraća: [{ start: '2026-10-01', label: 'Oct', isCurrent: true, isFuture: false }]
+export function thisMonth(today) {
+    return [{
+        start: periodStart(today, 'monthly'),
+        label: monthName(today, 'short'),
+        isCurrent: true,
+        isFuture: false,
+    }]
 }
 
 // Ime mjeseca na engleskom: monthName('2026-10-27') -> 'October 2026', monthName('2026-10-27', 'short') -> 'Oct'

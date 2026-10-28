@@ -65,7 +65,7 @@ Okvirni datumi su za orijentaciju. Ako kasnimo više od dan-dva, ubrzavamo (Clau
 - [x] Dashboard dohvaća navike s backenda (`useEffect`)
 - [x] Dodavanje navike (AddHabitDialog → `POST`)
 - [x] Backend: `GET /api/habits` vraća i datume zapisa za tekući mjesec
-- [ ] Označavanje: kalendar / tjedni / mjesec, klik → `PUT`/`DELETE`, streak za dnevne navike
+- [x] Označavanje: kalendar / tjedni / mjesec, klik → `PUT`/`DELETE`, streak za dnevne navike
 - [ ] Brisanje (arhiviranje) navike
 
 ### Statistika (do 29. 10.)

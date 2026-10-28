@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react"
-import HabitCard from "@/components/HabitCard"
 import AddHabitDialog from "@/components/AddHabitDialog"
 import HabitCalendar from "@/components/HabitCalendar"
 import { api } from "@/api/client"
 import { todayString } from "@/utils/dates"
-import { monthGrid, monthName } from "@/utils/calendar"
+import { monthGrid, monthName, monthWeeks, thisMonth } from "@/utils/calendar"
+import PeriodRow from "@/components/PeriodRow"
+
 
 async function fetchHabits() {
     const response = await api.get('/habits', { params: { today: todayString() }})
@@ -49,7 +50,8 @@ function Dashboard() {
     const today = todayString()
     const weeks = monthGrid(today)
     const daily = habits.filter(habit => habit.frequency === 'daily')
-    const other = habits.filter(habit => habit.frequency !== 'daily')
+    const weekly = habits.filter(habit => habit.frequency === 'weekly')
+    const monthly = habits.filter(habit => habit.frequency === 'monthly')
     
     if (loading) {
         return <p>Loading...</p>
@@ -93,14 +95,43 @@ function Dashboard() {
                         )}
                     </section>
 
-                    {/* weekly i monthly: zasad stare kartice (klik još ne radi), mijenjamo u sljedećem koraku */}
-                    {other.length > 0 && (
-                        <section className="grid grid-cols-1 gap-4 border-t p-6 sm:grid-cols-2 lg:grid-cols-3">
-                            {other.map(habit => (
-                                <HabitCard key={habit.id} habit={habit} onToggleToday={() => {}} />
-                            ))}
+                    {/* dolje: tjedne (lijevo) i mjesečne (desno) navike, jedna uz drugu */}
+                    <div className="grid border-t sm:grid-cols-2">
+                        <section className="space-y-4 p-6">
+                            <h2 className="text-lg font-bold">Weekly</h2>
+                            {weekly.length === 0 ? (
+                                <p className="text-sm text-muted-foreground">No weekly habits yet.</p>
+                            ) : (
+                                weekly.map(habit => (
+                                    <PeriodRow
+                                        key={habit.id}
+                                        habit={habit}
+                                        periods={monthWeeks(today)}
+                                        today={today}
+                                        onToggle={(date, isDone) => toggleLog(habit.id, date, isDone)}
+                                    />
+                                ))
+                            )}
                         </section>
-                    )}
+
+                        {/* na mobitelu ide ispod (crta gore), na širem ekranu desno (crta lijevo) */}
+                        <section className="space-y-4 border-t p-6 sm:border-t-0 sm:border-l">
+                            <h2 className="text-lg font-bold">Monthly</h2>
+                            {monthly.length === 0 ? (
+                                <p className="text-sm text-muted-foreground">No monthly habits yet.</p>
+                            ) : (
+                                monthly.map(habit => (
+                                    <PeriodRow
+                                        key={habit.id}
+                                        habit={habit}
+                                        periods={thisMonth(today)}
+                                        today={today}
+                                        onToggle={(date, isDone) => toggleLog(habit.id, date, isDone)}
+                                    />
+                                ))
+                            )}
+                        </section>
+                    </div>
                 </div>
             )}
         </>
