@@ -1,17 +1,21 @@
 import { cn } from "@/lib/utils"
 import { periodStart } from "@/utils/calendar"
+import ArchiveHabitDialog from "@/components/ArchiveHabitDialog"
 
 // red tjedne ili mjesečne navike: ime + kvadratić za svaki period
 // periods = monthWeeks(today) ili thisMonth(today), today = današnji datum, onToggle(date, isDone) = klik
 
-function PeriodRow({ habit, periods, today, onToggle }) {
+function PeriodRow({ habit, periods, today, onToggle, onArchive }) {
     // datum zapisa koji pada u period koji počinje sa start (ili undefined ako ga nema)
     const findLog = (start) => habit.dates.find ( date => periodStart(date, habit.frequency) === start )
 
 
     return (
         <div className="flex flex-wrap items-end gap-x-4 gap-y-1">
-            <span className="w-30 truncate font-semibold leading-8">{habit.name}</span>
+            <div className="flex w-40 items-center gap-1">
+                <span className="truncate font-semibold leading-8">{habit.name}</span>
+                <ArchiveHabitDialog habit={habit} onArchive={onArchive} />
+            </div>
             <div className="flex">
                 {periods.map((period, i) => {
                     const logDate = findLog(period.start)
@@ -32,7 +36,7 @@ function PeriodRow({ habit, periods, today, onToggle }) {
                                 "text-xs text-muted-foreground",
                                 period.isCurrent && "font-semibold text-foreground underline decoration-2 underline-offset-2"
                             )}>
-                                {period.label}
+                                {period.label} 
                             </span>
                             <button
                                 type="button"

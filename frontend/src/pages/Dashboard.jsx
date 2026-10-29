@@ -6,7 +6,6 @@ import { todayString } from "@/utils/dates"
 import { monthGrid, monthName, monthWeeks, thisMonth } from "@/utils/calendar"
 import PeriodRow from "@/components/PeriodRow"
 
-
 async function fetchHabits() {
     const response = await api.get('/habits', { params: { today: todayString() }})
     return response.data.habits
@@ -32,6 +31,10 @@ function Dashboard() {
         setHabits(prev => [...prev, { ...habit, doneInPeriod: false, streak: 0, dates: []}]) // nova navika još nema zapisa
     }
 
+    async function archiveHabit(habitId) {
+        await api.delete(`/habits/${habitId}`)
+        setHabits(prev => prev.filter(habit => habit.id !== habitId))
+    }
 
     useEffect(() => {
         async function loadHabits() {
@@ -89,6 +92,7 @@ function Dashboard() {
                                         habit={habit}
                                         weeks={weeks}
                                         onToggle={(date, isDone) => toggleLog(habit.id, date, isDone)}
+                                        onArchive={() => archiveHabit(habit.id)}
                                     />
                                 ))}
                             </div>
@@ -109,6 +113,7 @@ function Dashboard() {
                                         periods={monthWeeks(today)}
                                         today={today}
                                         onToggle={(date, isDone) => toggleLog(habit.id, date, isDone)}
+                                        onArchive={() => archiveHabit(habit.id)}
                                     />
                                 ))
                             )}
@@ -127,6 +132,7 @@ function Dashboard() {
                                         periods={thisMonth(today)}
                                         today={today}
                                         onToggle={(date, isDone) => toggleLog(habit.id, date, isDone)}
+                                        onArchive={() => archiveHabit(habit.id)}
                                     />
                                 ))
                             )}

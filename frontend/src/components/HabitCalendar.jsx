@@ -1,18 +1,22 @@
 import { cn } from "@/lib/utils"
 import { addDays } from "@/utils/calendar"
+import ArchiveHabitDialog from "@/components/ArchiveHabitDialog"
 
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
 // mali kalendar jedne dnevne navike za tekući mjesec
 // habit = navika s backenda (ima dates i streak), weeks = monthGrid(today), onToggle(date, isDone) = klik na dan
-function HabitCalendar({ habit, weeks, onToggle }) {
+function HabitCalendar({ habit, weeks, onToggle, onArchive }) {
     // je li navika odrađena tog dana? (habit.dates je niz datuma 'YYYY-MM-DD')
     const isDone = (date) => habit.dates.includes(date)
 
     return (
         <div className="w-[266px] space-y-3">
             <div>
-                <p className="font-semibold">{habit.name}</p>
+                <div className="flex items-center gap-1">
+                    <p className="font-semibold">{habit.name}</p>
+                    <ArchiveHabitDialog habit={habit} onArchive={onArchive} />
+                </div>
                 <p className="flex items-baseline gap-1.5">
                     <span className={cn("text-3xl font-bold", habit.streak > 0 ? "text-habit" : "text-muted-foreground")}>
                         {habit.streak}
