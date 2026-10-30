@@ -12,6 +12,13 @@ function toDateStr(date) {
     return date.toISOString().slice(0, 10)
 }
 
+// Datum pomaknut za n dana: addDays('2026-10-30', -29) -> '2026-10-01', addDays('2026-10-31', 1) -> '2026-11-01'
+export function addDays(dateStr, n) {
+    const date = toDate(dateStr)
+    date.setUTCDate(date.getUTCDate() + n)
+    return toDateStr(date)
+}
+
 // Početak perioda kojem datum pripada:
 //   daily   -> taj isti dan             ('2026-10-22' -> '2026-10-22')
 //   weekly  -> ponedjeljak tog tjedna   ('2026-10-22' -> '2026-10-19')

@@ -5,6 +5,7 @@ import express from 'express' // učitava express modul - to je biblioteka koja 
 import { config } from './config.js' // port, CORS origin i ostale postavke iz .env
 import authRoutes from './routes/auth.js'
 import habitRoutes from './routes/habits.js'
+import statsRoutes from './routes/stats.js'
 import { notFound, errorHandler } from './middleware/errorHandler.js'
 
 const app = express() // instanca Express aplikacije - app je moj server pomoću kojeg definiram rute
@@ -34,6 +35,7 @@ app.get('/', (req, res) =>  {
 
 app.use("/api/auth", authRoutes)
 app.use("/api/habits", habitRoutes)
+app.use("/api/stats", statsRoutes) // statistika navika za zadnjih 30 dana
 
 // ova dva moraju biti NAKON svih ruta: zahtjev do njih dođe samo ako ga nijedna ruta nije obradila
 app.use(notFound) // nepostojeća ruta -> 404 JSON
