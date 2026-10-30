@@ -66,12 +66,12 @@ Okvirni datumi su za orijentaciju. Ako kasnimo više od dan-dva, ubrzavamo (Clau
 - [x] Dodavanje navike (AddHabitDialog → `POST`)
 - [x] Backend: `GET /api/habits` vraća i datume zapisa za tekući mjesec
 - [x] Označavanje: kalendar / tjedni / mjesec, klik → `PUT`/`DELETE`, streak za dnevne navike
-- [ ] Brisanje (arhiviranje) navike
+- [x] Brisanje (arhiviranje) navike
 
 ### Statistika (do 29. 10.)
 
-- [ ] Backend: postotak izvršenja i odrađeni dani u zadnjih 30 dana
-- [ ] Frontend: stranica `/stats` s grafom
+- [x] Backend: postotak izvršenja i odrađeni dani u zadnjih 30 dana
+- [x] Frontend: stranica `/stats` s grafom
 
 ### Online (do 31. 10.)
 

@@ -5,6 +5,7 @@ import HomePage from "@/pages/HomePage";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Dashboard from "@/pages/Dashboard";
+import Stats from "@/pages/Stats";
 import ComingSoon from "@/pages/ComingSoon";
 import NotFound from "@/pages/NotFound";
 
@@ -23,7 +24,7 @@ function App() {
                     <Route path="/habits" element={<ComingSoon title="Habits" />} />
                     <Route path="/diary" element={<ComingSoon title="Diary" />} />
                     <Route path="/plans" element={<ComingSoon title="Plans" />} />
-                    <Route path="/stats" element={<ComingSoon title="Stats" />} />
+                    <Route path="/stats" element={<Stats />} />
                     <Route path="/settings" element={<ComingSoon title="Settings" />} />
                 </Route>
             </Route>

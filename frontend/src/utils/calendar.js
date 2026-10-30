@@ -89,6 +89,20 @@ export function thisMonth(today) {
     }]
 }
 
+// Svi datumi od from do to, uključujući oba: dateRange('2026-10-29', '2026-10-31') -> ['2026-10-29', '2026-10-30', '2026-10-31']
+export function dateRange(from, to) {
+    const dates = []
+    for (let date = from; date <= to; date = addDays(date, 1)) {
+        dates.push(date)
+    }
+    return dates
+}
+
+// Kratki datum na engleskom: dayLabel('2026-10-01') -> '1 Oct'
+export function dayLabel(dateStr) {
+    return toDate(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', timeZone: 'UTC' })
+}
+
 // Ime mjeseca na engleskom: monthName('2026-10-27') -> 'October 2026', monthName('2026-10-27', 'short') -> 'Oct'
 export function monthName(today, format = 'long') {
     const options = format === 'short'
